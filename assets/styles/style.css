@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200;500&display=swap%27');
+
+*{
+    color: white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Oxanium;
+}
+
+main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+}
+
+.container{
+    width: 35%;
+    height: 30%;
+    background-color: black;
+    padding: 15px 15px;
+    display: flex;
+    border-radius: 12px;
+}
+
+.logo-area{
+    width: 100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.logo-area img{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 200px;
+}
+
+.form-area{
+    display: flex;
+    flex-direction: column;
+    flex: 1.5;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-area h2{
+    padding-bottom: 10px;    
+    font-weight: bolder;
+}
+
+
+hr{
+    width: 250px;
+    margin-bottom: 15px;
+    border: solid 1px white;
+}
+
+.form-items{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.form-area input{
+    width: 199px;
+    border: none;
+    padding: 8px 8px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.form-area a{
+    font-size: 12px;
+}
+
+.form-submit-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bolder;
+}
+
+.form-area button{
+    font-weight: bolder;
+    border-radius: 12px;
+    width: 90px;
+    height: 30px;
+    background-color: #01B267;
+    text-shadow: 1px 1px 1px rgba(24,24, 24, 0.9);
+    box-shadow: 0px 1px 3px #9e9e9e;
+}
+
+.reset-password{
+    margin-bottom: 10px;
+    text-align: right;
+    font-weight: bolder;
+}
+
