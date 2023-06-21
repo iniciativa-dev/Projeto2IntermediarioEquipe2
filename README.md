@@ -1,4 +1,4 @@
-# Entrega la : Sistema de entregas web
+# Nova Shopping : Sistema de entregas web
 
 ## Tecnologias utilizadas:
 
