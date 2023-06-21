@@ -6,12 +6,12 @@
 
 ## Estrutura do Projeto
 
-1. Pagina de Login
-    - Requisiçao Assincrona HTTP
-    - Conexao remota com Banco de Dados
-    - Validaçao de login
-    - Criaçao de Cookie para permanecer conectado
-2. Pagina de Pedido
+1. Página de Login
+    - Requisição Assíncrona HTTP
+    - Conexão remota com Banco de Dados
+    - Validação de login
+    - Criação de cookie para permanecer conectado
+2. Página de Pedido
     1. Aba Pedidos:
        - Verificar pedidos em andamento
        - Editar pedidos
