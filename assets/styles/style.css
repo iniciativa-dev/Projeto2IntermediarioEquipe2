@@ -22,7 +22,7 @@ main{
 
 .container{
     width: 35%;
-    height: 30%;
+    height: 35%;
     background-color: black;
     padding: 15px 15px;
     display: flex;
@@ -84,6 +84,7 @@ hr{
     padding: 8px 8px;
     border-radius: 12px;
     margin-bottom: 15px;
+    color: black;
 }
 
 .form-area a{
@@ -115,7 +116,8 @@ hr{
 
 @media (max-width: 1420px){
     .container{
-        height: 55vh;
+        height: 420px;
+        width: 500px;
         display: flex;
         flex-direction: column;
     }
@@ -134,4 +136,13 @@ hr{
         margin-bottom: 35px;
     }
 
+}
+
+@media (max-width: 500px){
+    .container{
+        height: 420px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+    }
 }
