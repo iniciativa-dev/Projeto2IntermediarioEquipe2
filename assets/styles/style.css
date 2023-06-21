@@ -8,6 +8,10 @@
     font-family: Oxanium;
 }
 
+body{
+    background-color: #bbbbbb;
+}
+
 main{
     width: 100vw;
     height: 100vh;
@@ -23,6 +27,7 @@ main{
     padding: 15px 15px;
     display: flex;
     border-radius: 12px;
+    box-shadow: 8px 8px 8px rgba(24,24, 24, 0.5);
 }
 
 .logo-area{
