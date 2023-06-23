@@ -13,15 +13,17 @@ body{
 }
 
 main{
-    width: 100vw;
-    height: 100vh;
     display: flex;
     justify-content: center;    
     align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
 }
 
 .container{
-    width: 35%;
+    width: 50%;
     height: 35%;
     background-color: black;
     padding: 15px 15px;
@@ -43,7 +45,8 @@ main{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 200px;
+    max-width: 250px;
+    height: auto;
 }
 
 .form-area{
@@ -79,11 +82,12 @@ hr{
 }
 
 .form-area input{
-    width: 199px;
+    width: 200px;
     border: none;
     padding: 8px 8px;
     border-radius: 12px;
     margin-bottom: 15px;
+    margin-left: 10px;
     color: black;
 }
 
@@ -106,6 +110,18 @@ hr{
     background-color: #01B267;
     text-shadow: 1px 1px 1px rgba(24,24, 24, 0.9);
     box-shadow: 0px 1px 3px #9e9e9e;
+}
+
+.form-checkbox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-checkbox input{
+    width: auto;
+    height: auto;
+    margin: 10px 10px;
 }
 
 .reset-password{
@@ -133,7 +149,11 @@ hr{
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 35px;
+        margin-bottom: 15px;
+    }
+    
+    .form-area {
+        margin-top: 10px;
     }
 
 }
