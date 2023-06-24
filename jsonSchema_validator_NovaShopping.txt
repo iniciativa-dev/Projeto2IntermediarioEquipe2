@@ -1,10 +1,14 @@
 use novaShoppingDb
 
 db.createCollection(
-	"usuario",
+	"funcionario",
 	{validator:{$jsonSchema:{
-		required:["id_usuario", "senha", "nome", "endereco", "cnpj"],
+		required:["id_funcionario", "email", "senha", "nome", "endereco", "documentos"],
 		properties: {
+			email: {
+				bsonType: "string",
+				description: "O email tem que ser informado"
+			},
 			id_usuario: {
 				bsonType: "int",
 				description: "O campo id deve ser informado"
@@ -26,12 +30,20 @@ db.createCollection(
 						}
 					}
 			},
-			cnpj: {
-				bsonType: "int",
-				description: "Para ser cliente é preciso ter um CNPJ",
-				minLength: 14,
-				maxLength: 14
+			documentos: {
+				bsonType: "object",
+				description: "rg e cpf",
+				required: ["rg", "cpf"],
+					properties: {
+						cpf: {
+							bsonType: "string",
+							description: "o cpf tem que conter 11 digitos",
+							minLength: 11,
+							maxLength: 11
+						}
+					}
 			}
+			
 		} 
 }}})
 	
@@ -93,3 +105,11 @@ db.createCollection(
 		}
 	}
 }})
+
+========================================================================
+
+query testes:
+
+db.funcionario.insertOne({id_funcionario: 1, email: 'alexandre@gmail.com', senha: '12341234', nome: 'Alexandre', endereco: { logradouro: 'rua sem saida', numero: 's/n', cep: 12345123, cidade: 'Beira Mar' }, documentos: { rg: '12341234', cpf: '12345123451' } });
+
+
