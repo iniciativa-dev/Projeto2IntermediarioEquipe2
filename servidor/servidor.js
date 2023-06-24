@@ -21,6 +21,7 @@ const extencoes = {
 //=================== Declaraçao funçoes ==========================
 
 function sendFile(percurso, res, binary=false){
+    console.log(percurso)
     fs.promises.readFile(path.join(__dirname, percurso), (err)=>{
         if (err){ 
             console.log(err); 
@@ -41,7 +42,7 @@ http.createServer((req, res)=>{
     if (caminho.indexOf('?') > 0) caminho = caminho.substring(0,caminho.indexOf('?'));
     let ext = path.extname(caminho);
     switch(caminho){
-
+        
         case "/form":
             req.on('data', chunk => {
                 body = '';
@@ -54,12 +55,11 @@ http.createServer((req, res)=>{
                     async function verificar(){
                         let verifica = await db.verifica(body['email'], body['senha']);
                         if (verifica) {
-                            res.write(301, {'Location': '/app'});
+                            res.setHeader('Location', '/app');
                         }else {
-                            res.write(301, {
-                                'Location': `/?email=${body['email']}`
-                            });
+                            res.setHeader('Location', `/?email=${body['email']}`);
                         }
+                        res.statusCode = 301;
                         res.end();
                     }
                     verificar();
