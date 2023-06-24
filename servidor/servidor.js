@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs');
 const db = require('./basedados')
 const qs = require('querystring');
-const { type } = require('os');
 
 //=================== Declaraçao variaveis ==========================
 
@@ -40,50 +39,25 @@ function sendFile(percurso, res, binary=false){
 http.createServer((req, res)=>{
     let caminho = req.url;
     if (caminho.indexOf('?') > 0) caminho = caminho.substring(0,caminho.indexOf('?'));
-    const ext = path.extname(caminho);
+    let ext = path.extname(caminho);
     switch(caminho){
 
-        case "/":
-            //verificaCookie();
-            console.log(req.headers.cookie);
-            res.writeHead(200, {'Content-Type': extencoes['.html']});
-            sendFile('/html/index.html', res)
-            break;
-        
-        case "/app":
-            //verificaCookie();
-            console.log(req.headers.cookie);
-            cookie = req.headers.cookie
-            res.setHeader('Content-Type', extencoes['.html']);
-            //res.setHeader('Set-Cookie', 'acesso=true;expires=-1;overwrite=true' )
-            res.statusCode = 200;
-            sendFile('/html/app.html', res)
-            break;
-
         case "/form":
-            let body= ''
             req.on('data', chunk => {
+                body = '';
                 body += chunk;
                 body = qs.parse(body);
+                console.log(body['senha']);
+                console.log(body['email']);
 
                 if (body['senha']  && body['email']){
-                    let verifica
                     async function verificar(){
-                        verifica = await db.verifica(body['email'], body['senha']);
+                        let verifica = await db.verifica(body['email'], body['senha']);
                         if (verifica) {
-                            hoje = Date.parse(new Date());
-                            console.log(new Date());
-                            console.log(hoje)
-                            hoje += 3600000*5;
-                            hoje = new Date(hoje);
-                            console.log(hoje)
-                            res.setHeader('Location', '/app');
-                            res.setHeader('Set-Cookie', ['acesso=true;Expires='+ hoje]);
-                            res.statusCode = 301;
+                            res.write(301, {'Location': '/app'});
                         }else {
-                            res.writeHead(301, {
-                                'Location': `/?email=${body['email']}`, 
-                                "Set-Cookie": ['conexao=false', 'maxAge=3600000']
+                            res.write(301, {
+                                'Location': `/?email=${body['email']}`
                             });
                         }
                         res.end();
@@ -97,6 +71,14 @@ http.createServer((req, res)=>{
               })            
             break;
 
+        case "/":
+            ext = '.html'
+            if (caminho == '/') caminho = '/html/index.html';
+        
+        case "/app":
+            ext = '.html'
+            if (caminho == '/app') caminho = '/html/app.html';
+
         default:
             if(extencoes[ext]){
                 res.writeHead(200, {'Content-Type': extencoes[ext]});
@@ -109,9 +91,7 @@ http.createServer((req, res)=>{
             } else {
                 res.writeHead(404, {'content-Type': extencoes['.txt']});
                 res.end("Erro 404 - Page not Found");
-            }
-                
-                
+            }        
             break;
     }
     
