@@ -22,7 +22,7 @@ main{
 
 .container{
     width: 35%;
-    height: 35%;
+    height: 30%;
     background-color: black;
     padding: 15px 15px;
     display: flex;
@@ -68,7 +68,7 @@ main{
 
 hr{
     width: 250px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: solid 1px white;
 }
 
@@ -112,6 +112,12 @@ hr{
     margin-bottom: 10px;
     text-align: right;
     font-weight: bolder;
+}
+
+#loginfailed{
+    color: rgb(252, 107, 107);
+    text-align: center;
+    padding-bottom: 10px;
 }
 
 @media (max-width: 1420px){

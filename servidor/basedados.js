@@ -3,23 +3,25 @@ const uri = 'mongodb+srv://projetonovashopping:M27KyjKCyk8Dx6Z3@clusternovashopp
 
 let cliente = new mongodb.MongoClient(uri);
 
-async function run(usuario, senha){
+async function verifica(funcionario, senha){
     try{
         const dataBase = cliente.db("novaShoppingDb");
         const colecao = dataBase.collection('funcionario');
 
-        const query = {email: usuario, senha: senha};
+        const query = {email: funcionario, senha: senha};
 
         await cliente.connect();
 
         let achou = await colecao.findOne(query);
-        console.log(achou)
+        
+        if (achou) return true;
+        return false
 
     }catch(e){
         console.log(e);
+        return false
     }
 }
 
-run('alexandre@gmail.com', '12341234');
 
-//module.exports(run);
+module.exports = {verifica};

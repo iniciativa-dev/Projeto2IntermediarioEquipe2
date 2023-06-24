@@ -3,11 +3,14 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
-var qs = require('querystring');
+const db = require('./basedados')
+const qs = require('querystring');
+const { type } = require('os');
 
 //=================== Declaraçao variaveis ==========================
 
 const extencoes = {
+    '.html': 'text/html', 
     '.css' : 'text/css',
     '.js' : 'application/javascript',
     '.jpeg' : 'image/jpeg',
@@ -35,17 +38,25 @@ function sendFile(percurso, res, binary=false){
 //================= execuçao do programa =======================
 
 http.createServer((req, res)=>{
-    const caminho = req.url;
+    let caminho = req.url;
+    if (caminho.indexOf('?') > 0) caminho = caminho.substring(0,caminho.indexOf('?'));
     const ext = path.extname(caminho);
     switch(caminho){
 
         case "/":
-            res.writeHead(200, {'Content-Type': 'text/html'});
+            //verificaCookie();
+            console.log(req.headers.cookie);
+            res.writeHead(200, {'Content-Type': extencoes['.html']});
             sendFile('/html/index.html', res)
             break;
         
         case "/app":
-            res.writeHead(200, {'Content-Type': extencoes['.txt']});
+            //verificaCookie();
+            console.log(req.headers.cookie);
+            cookie = req.headers.cookie
+            res.setHeader('Content-Type', extencoes['.html']);
+            //res.setHeader('Set-Cookie', 'acesso=true;expires=-1;overwrite=true' )
+            res.statusCode = 200;
             sendFile('/html/app.html', res)
             break;
 
@@ -56,8 +67,28 @@ http.createServer((req, res)=>{
                 body = qs.parse(body);
 
                 if (body['senha']  && body['email']){
-                    res.writeHead(301, {'Location': '/app'});
-                    res.end();
+                    let verifica
+                    async function verificar(){
+                        verifica = await db.verifica(body['email'], body['senha']);
+                        if (verifica) {
+                            hoje = Date.parse(new Date());
+                            console.log(new Date());
+                            console.log(hoje)
+                            hoje += 3600000*5;
+                            hoje = new Date(hoje);
+                            console.log(hoje)
+                            res.setHeader('Location', '/app');
+                            res.setHeader('Set-Cookie', ['acesso=true;Expires='+ hoje]);
+                            res.statusCode = 301;
+                        }else {
+                            res.writeHead(301, {
+                                'Location': `/?email=${body['email']}`, 
+                                "Set-Cookie": ['conexao=false', 'maxAge=3600000']
+                            });
+                        }
+                        res.end();
+                    }
+                    verificar();
                 } else {
                     res.writeHead(200, {'Content-Type': extencoes['.txt']});
                     res.end("<p>Erro 401 - Unauthorized</p>");
@@ -69,7 +100,6 @@ http.createServer((req, res)=>{
         default:
             if(extencoes[ext]){
                 res.writeHead(200, {'Content-Type': extencoes[ext]});
-                console.log(extencoes[ext])
                 if ([ext] == '.png' || [ext] == '.jpeg' || [ext] == '.ico'){
                     sendFile(caminho, res, true)
                 } else {
