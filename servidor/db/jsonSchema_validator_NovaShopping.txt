@@ -1,0 +1,115 @@
+use novaShoppingDb
+
+db.createCollection(
+	"funcionario",
+	{validator:{$jsonSchema:{
+		required:["id_funcionario", "email", "senha", "nome", "endereco", "documentos"],
+		properties: {
+			email: {
+				bsonType: "string",
+				description: "O email tem que ser informado"
+			},
+			id_usuario: {
+				bsonType: "int",
+				description: "O campo id deve ser informado"
+			},
+			senha: {
+				bsonType: "string",
+				description: "A senha tem que ser haseada"
+			},
+			endereco: {
+				bsonType: "object",
+				description: "Insira logradouro, numero, cep, cidade",
+				required: ["logradouro", "numero", "cep", "cidade"],
+					properties: {
+						cep: {
+							bsonType: "int",
+							description: "O cep nao pode conter hifen",
+							minLength: 8,
+							maxLength: 8
+						}
+					}
+			},
+			documentos: {
+				bsonType: "object",
+				description: "rg e cpf",
+				required: ["rg", "cpf"],
+					properties: {
+						cpf: {
+							bsonType: "string",
+							description: "o cpf tem que conter 11 digitos",
+							minLength: 11,
+							maxLength: 11
+						}
+					}
+			}
+			
+		} 
+}}})
+	
+db.createCollection(
+	"cliente",
+	{validator:{$jsonSchema:{
+		required:["id_cliente", "senha", "nome", "endereco", "documentos"],
+		properties: {
+			id_cliente: {
+				bsonType: "int",
+				description: "O campo id deve ser informado"
+			},
+			senha: {
+				bsonType: "string",
+				description: "A senha tem que ser haseada"
+			},
+			endereco: {
+				bsonType: "object",
+				description: "Insira logradouro, numero, cep, cidade",
+				required: ["logradouro", "numero", "cep", "cidade"],
+					properties: {
+						cep: {
+							bsonType: "int",
+							description: "O cep nao pode conter hifen",
+							minLength: 8,
+							maxLength: 8
+						}
+					}
+			},
+			documentos: {
+				bsonType: "object",
+				description: "Insira Rg e Cpf",
+				required: ["rg", "cpf"],
+					properties: {
+						cpf: {
+							bsonType: "int",
+							description: "O cpf nao pode conter hifen",
+							minLength: 11,
+							maxLength: 11
+						}
+					}
+			}
+		} 
+}}})
+
+db.createCollection(
+	"produto",
+	{validator: {$jsonSchema: {
+		required: ["id_produto", "nome", "ingredientes"],
+		properties: {
+			id_produto: {
+				bsonType: "int",
+				description: "O campo id deve ser informado"
+			},
+			ingredientes:{
+				bsonType: "array",
+				description: "O numero de ingredientes é livre"
+			}
+		}
+	}
+}})
+
+========================================================================
+
+query testes:
+
+db.funcionario.insertOne({id_funcionario: 1, email: 'alexandre@gmail.com', senha: '12341234', nome: 'Alexandre', endereco: { logradouro: 'rua sem saida', numero: 's/n', cep: 12345123, cidade: 'Beira Mar' }, documentos: { rg: '12341234', cpf: '12345123451' } });
+
+

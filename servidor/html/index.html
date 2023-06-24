@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nova Shopping - Login</title>
+        <link rel="stylesheet" type="text/css" href="/html/assets/styles/style.css">
+    </head>
+
+    <body>
+        <main>
+            <div class="container">
+                <div class="logo-area">
+                    <img src="/html/assets/img/logo.png">
+                </div><!--logo-area-->
+
+                <div class="form-area">
+                    <div class="form-title">
+                        <h2>LOGIN - ADM</h2>    
+                        <hr>
+                    </div>
+                    <div>
+                        <form method="POST" action="/form" >
+                            <div class="form-items">
+                                <div>
+                                    <label for="email">E-mail:</label>
+                                    <input type="text" name="email" id="email" placeholder="E-mail">
+                                </div>
+                                <div>
+                                    <label for="senha">Senha:</label>
+                                    <input type="password" name="senha" id="senha" placeholder="Senha">
+                                </div>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="conexao" id="conexao" style="margin-left: 15px;width: 15px; height: 15px;">
+                                <label for="conexao" style="margin-left: 20px;">Mantenha-me conectado</label>
+                            </div>
+                            <div class="reset-password">
+                                <a href="#">Esqueceu sua senha?</a>    
+                            </div>
+                            <div class="form-submit-button">
+                                <a href="#">Cadastre-se</a>    
+                                <button name="acessar">Acessar</button>
+                            </div>                            
+                        </form>
+                    </div>                    
+                </div><!--form-area-->
+
+            </div>
+        </main>
+        <script src="/html/assets/scripts/script.js"></script>        
+    </body>
+</html>
