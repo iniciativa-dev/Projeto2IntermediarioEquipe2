@@ -35,19 +35,19 @@
 
 ### Página de Login
 
-![Layout_Login](assets/img/LoginLogin---ADM.png)
+![Layout_Login](servidor/assets/img/LoginLogin---ADM.png)
 
 A imagem acima é o modelo que pretendemos seguir para a elaboraçao do layout da pagina de Login.
 
 ### Página de Pedidos
 
-![Layout_Pedidos](assets/img/LoginFolha-de-Registros.png)
+![Layout_Pedidos](servidor/assets/img/LoginFolha-de-Registros.png)
 
 A imagem acima é o modelo que pretendemos seguir para a elaboraçao do layout da pagina de Pedidos.
 
 ### Modelo do Banco de Dados
 
-![Modelo_DB](assets/img/modelo_mongodb.png)
+![Modelo_DB](servidor/assets/img/modelo_mongodb.png)
 
 O banco de dados MongoDb é NoSql o que implica que sua utilização não esta necessariamente sujeita a regras de relacionamente ou a estruturas pré-definidas das coleções. Entretanto, para garantir um certa integridade dos dados e um bom funcionamento do sistema é sempre interessante garantir que algumas informações imprescindíveis estejam presentes dentro do banco de dados e para tanto é necessario utilizar Schemas Json.
 
