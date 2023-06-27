@@ -55,6 +55,7 @@ http.createServer((req, res)=>{
                     async function verificar(){
                         let verifica = await db.verifica(body['email'], body['senha']);
                         if (verifica) {
+                            res.setHeader('Set-Cookie', 'acesso=ok2');
                             res.setHeader('Location', '/app');
                         }else {
                             res.setHeader('Location', `/?email=${body['email']}`);
@@ -77,7 +78,19 @@ http.createServer((req, res)=>{
         
         case "/app":
             ext = '.html'
-            if (caminho == '/app') caminho = '/html/app.html';
+            if (caminho == '/app') {
+                cookie = req.headers.cookie;
+                if(cookie && cookie.split('=')[1] == 'ok2'){
+                    caminho = '/html/app.html'
+                } else {
+                    res.setHeader('Location', '/');
+                    res.statusCode = 301;
+                    res.end();
+                    break;
+                }
+                
+            };
+            
 
         default:
             if(extencoes[ext]){
