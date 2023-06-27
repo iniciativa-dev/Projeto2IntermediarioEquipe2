@@ -113,3 +113,15 @@ query testes:
 db.funcionario.insertOne({id_funcionario: 1, email: 'alexandre@gmail.com', senha: '12341234', nome: 'Alexandre', endereco: { logradouro: 'rua sem saida', numero: 's/n', cep: 12345123, cidade: 'Beira Mar' }, documentos: { rg: '12341234', cpf: '12345123451' } });
 
 db.funcionario.insertOne({id_funcionario: 2, email: 'joao@gmail.com', senha: '43214321', nome: 'Joao', endereco: { logradouro: 'Avenida do amanha', numero: 3000, cep: 87654321, cidade: 'Nas Montanhas' }, documentos: { rg: '531531-x', cpf: '00000000012' } });
+
+========================================================================
+
+functions:
+
+db.system.js.insertOne({
+    _id: 'contador',
+    value: function(){
+        let maxId = db.funcionario.find({},{id_funcionario: 1, _id: 0}).sort({id_funcionario: -1}).limit(1)
+        return maxId.id_funcionario
+    }
+})
