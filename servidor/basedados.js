@@ -1,5 +1,5 @@
 const mongodb = require('mongodb');
-const uri = 'mongodb+srv://projetonovashopping:M27KyjKCyk8Dx6Z3@clusternovashopping.kd2otni.mongodb.net/?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://projetonovashopping:<senha>@clusternovashopping.kd2otni.mongodb.net/?retryWrites=true&w=majority';
 
 let cliente = new mongodb.MongoClient(uri);
 
