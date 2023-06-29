@@ -59,7 +59,6 @@ function trataCookie(cookie){
 //================= execuçao do programa =======================
 
 http.createServer((req, res)=>{
-    let a;
     let caminho = req.url;
     if (caminho.indexOf('?') > 0) caminho = caminho.substring(0,caminho.indexOf('?'));
     let ext = path.extname(caminho).slice(1);
@@ -80,7 +79,7 @@ http.createServer((req, res)=>{
                                 let token = await db.setToken(id_func, body['conexao'] == 'on' ? true : false);
                                 tempo = new Date();
                                 tempo.setDate(tempo.getDate() + 30);
-                                res.setHeader('Set-Cookie', [`id=${id_func};Expires=${tempo};Path=/;`, `token=${token};Expires=${tempo};Path=/;`, 'acesso=ok;Expires=${tempo};Path=/;'])
+                                res.setHeader('Set-Cookie', [`id=${id_func};Expires=${tempo};Path=/;`, `token=${token};Expires=${tempo};Path=/;`, `acesso=ok;Expires=${tempo};Path=/;`])
                             } else {
                                 let token = await db.setToken(id_func, body['conexao'] == 'off' ? true : false);
                                 res.setHeader('Set-Cookie', [`id=${id_func};Expires=-1;Path=/;`, `token=${token};Expires=-1;Path=/;`, 'acesso=ok;Expires=-1;Path=/;'])
@@ -106,13 +105,12 @@ http.createServer((req, res)=>{
             break;
         
         case "/app":
-            console.log('entrou rota app')
             let cookie = req.headers.cookie;
             if(cookie){
                 async function verCookie() {
                     let cookies = trataCookie(cookie);
                     token = await db.verificaCookie(parseInt(cookies[0][1]));
-                    if (cookies[1][1] = token){
+                    if (cookies[1][1] = token && cookies[2][1] == 'ok'){
                         res.writeHead(200, {'Content-Type': 'text/html'});
                         res.end(arquivos['app']);
                     } else {
@@ -124,7 +122,6 @@ http.createServer((req, res)=>{
                 }
                 verCookie();
             } else {
-                console.log('entrou no else app')
                 res.setHeader('Location', '/?erro1=true');
                 res.statusCode = 301;
                 res.end();
@@ -133,16 +130,11 @@ http.createServer((req, res)=>{
 
         case "/":
             let cookieIndex = req.headers.cookie;
-            console.log(cookieIndex)
-            console.log("entrou na rota")
             if(cookieIndex){
-                console.log('entrou cookie')
                 let cookies = trataCookie(cookieIndex);
                 async function verCookie() {
                     token = await db.verificaCookie(parseInt(cookies[0][1]));
                     if (cookies[1][1] = token && cookies[2][1] == 'ok'){
-                        console.log('entrou')
-                        console.log(cookies[2][1])
                         res.setHeader('Location', '/app');
                         res.statusCode = 301;
                         res.end();
@@ -155,7 +147,6 @@ http.createServer((req, res)=>{
                 }
                 verCookie();
             } else {
-                console.log('entrou padrao')
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(arquivos['index']);
             }

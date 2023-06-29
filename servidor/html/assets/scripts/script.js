@@ -30,5 +30,6 @@ function logout(){
     document.cookie = 'acesso=non;Expires=-1;Path=/;'
     document.cookie = `id=${idCookie[1]};Expires=-1;Path=/;`
     document.cookie = `token=${tokenCookie[1]};Expires=-1;Path=/;`
-    window.location.href = '/'
+
+    window.location.href = '/?'
 }
