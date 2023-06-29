@@ -29,21 +29,35 @@ async function verifica(funcionario, senha){
     let achou = await colecao.findOne(query);
 
     cliente.close();
-    
-    if (achou) return true;
+
+    if (achou) return achou['id_funcionario'];
     return false;
 }
 
-async function setToken(funcionario){
+async function setToken(id, acesso){
 
-    let colecao = await conecta('funcionario');
+    let colecao = await conecta('conexao');
 
-    let query = {email: funcionario};
-    const id = await colecao.findOne(query, {'id_funcionario' : 1, '_id': 0 });
-    console.log(id);
+    token = geraToken();
+
+    const query = {user: id}
+    const update = {$set: {"token": token, "acesso": acesso}};
+    const query2 = {user: id, token: token, acesso: acesso};
+    let resultado = await colecao.findOneAndUpdate(query, update);
+    await colecao.insertOne(query2);
+    return resultado;
     cliente.close();
 
 }
 
+function geraToken(){
+    token = '';
+    var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxwyxz0123456789';
+    for (i=0; i<10; i++){
+        token += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+
+    return token;
+}
 
 module.exports = {verifica,setToken};

@@ -49,12 +49,10 @@ http.createServer((req, res)=>{
 
                 if (body['senha']  && body['email']){
                     async function verificar(){
-                        let verifica = await db.verifica(body['email'], body['senha']);
-                        await db.setToken(body['email']);
-                        if (verifica) {
+                        let id_func = await db.verifica(body['email'], body['senha']);
+                        let token = await db.setToken(id_func, body['conexao'] == 'on' ? true : false);
+                        if (id_func) {
                             if (body['conexao'] == 'on'){
-                                console.log('entrou')
-                                console.log(await db.setToken(body['email']))
                             } else {
                                 res.setHeader('Set-Cookie', 'acesso=ok2');
                             }
