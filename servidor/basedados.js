@@ -4,13 +4,13 @@ const uri = 'mongodb+srv://projetonovashopping:M27KyjKCyk8Dx6Z3@clusternovashopp
 
 let cliente = new mongodb.MongoClient(uri);
 
-async function conecta(colec='funcionario'){
+async function conecta(colection='funcionario'){
     try{
         
-        const dataBase = cliente.db("novaShoppingDb");
-        const colecao = dataBase.collection(colec);
-
         await cliente.connect();
+
+        const dataBase = cliente.db("novaShoppingDb");
+        const colecao = dataBase.collection(colection);
 
         return colecao;
 
@@ -20,10 +20,10 @@ async function conecta(colec='funcionario'){
     }
 }
 
-async function verifica(funcionario, senha){
+async function verificaConexao(funcionario, senha){
 
     
-    let colecao = await conecta('funcionario');
+    const colecao = await conecta('funcionario');
     
     const query = {email: funcionario, senha: senha};
     let achou = await colecao.findOne(query);
@@ -34,19 +34,33 @@ async function verifica(funcionario, senha){
     return false;
 }
 
+async function verificaCookie (id){
+    const colecao = await conecta('conexao');
+    const query = {'user': id};
+    const resultado = await colecao.findOne(query);
+    return resultado.token;
+}
+
 async function setToken(id, acesso){
 
-    let colecao = await conecta('conexao');
+    const colecao = await conecta('conexao');
 
     token = geraToken();
 
-    const query = {user: id}
+    const query = {user: id};
     const update = {$set: {"token": token, "acesso": acesso}};
     const query2 = {user: id, token: token, acesso: acesso};
     let resultado = await colecao.findOneAndUpdate(query, update);
-    await colecao.insertOne(query2);
-    return resultado;
     cliente.close();
+
+    if (!resultado.lastErrorObject.updatedExisting){
+        const conection = await conecta('conexao');
+        resultado = await conection.insertOne(query2);
+        cliente.close();
+    }
+    
+    
+    return token;
 
 }
 
@@ -60,4 +74,4 @@ function geraToken(){
     return token;
 }
 
-module.exports = {verifica,setToken};
+module.exports = {verificaConexao,setToken,verificaCookie};
